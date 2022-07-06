@@ -4,6 +4,8 @@
 Controle de acesso usando NodeJS. O projeto está sendo desenvolvido com foco na didática e não sendo um projeto para venda.
 
 ## Tecnologias
+### As tecnologias estão sendo implementadas por meio de necessidades.
+
 - NODEJS
 - Express
 - Nodemon ( Para desenvolvimento )
