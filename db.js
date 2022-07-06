@@ -1,24 +1,50 @@
 require('dotenv').config();
 const mysql = require('mysql2');
 
-module.exports = (firstNamePARAM, surnamePARAM, emailPARAM, passPARAM) => {
-    const connection = mysql.createConnection({
-        host: process.env.devHOST,
-        user: process.env.devUSER,
-        database: process.env.devDB
-    })
+module.exports = {
 
-    const queryINSERT = 'INSERT INTO `db_user` (`name`, `surname`, `email`, `password`, `registered`) VALUES(?, ?, ?, ?, ?)'
-    const queryVALUES = [firstNamePARAM, surnamePARAM, emailPARAM, passPARAM, new Date()]
-    
-    connection.query(
-        queryINSERT,
-        queryVALUES,
-        function (err, results, fields) {
-            console.log(results); // results contains rows returned by server
-            console.log(err)
+    DATABASE: {
+        insert_db: function (firstNamePARAM, surnamePARAM, emailPARAM, passPARAM) {
+            const connection = mysql.createConnection({
+                host: process.env.devHOST,
+                user: process.env.devUSER,
+                database: process.env.devDB
+            })
+
+            const INSERT = 'INSERT INTO `db_user` (`name`, `surname`, `email`, `password`, `registered`) VALUES(?, ?, ?, ?, ?)'
+            const VALUES = [firstNamePARAM, surnamePARAM, emailPARAM, passPARAM, new Date()]
+
+            connection.query(
+                INSERT,
+                VALUES,
+                function (err, results, fields) {
+                    console.log(results); // results contains rows returned by server
+                    console.log(err)
+                }
+            );
+
+            connection.end();
+        },
+
+        query_DB: function (emailPARAM, passPARAM) {
+            const connection = mysql.createConnection({
+                host: process.env.devHOST,
+                user: process.env.devUSER,
+                database: process.env.devDB
+            })
+
+            const querySELECT = 'SELECT email, password FROM db_user WHERE email=? AND password=?'
+            const VALUES = [emailPARAM, passPARAM]
+
+            connection.query(
+                querySELECT,
+                VALUES,
+                function (err, results, fields) {
+                    if(results){
+                        console.log(results)
+                    }
+                }
+            )
         }
-    );
-
-    connection.end();
+    }
 }

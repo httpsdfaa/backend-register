@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const db = require('./db');
+const { DATABASE } = require('./db');
 
 const { PORT } = require('./config');
 
@@ -31,9 +31,26 @@ App.post('/api/register', (req, res) => {
     })
 
     // ADICIONANDO DADOS NO BANCO DE DADOS
-    db(
+    DATABASE.insert_db(
         data.firstName,
         data.surname,
+        data.email,
+        data.pass
+    )
+})
+
+App.post('/api/login', (req, res) => {
+    const data = {
+        email: req.body.email,
+        pass: req.body.pass
+    }
+
+    res.status(200).json({
+        status_code: 1,
+        data: req.body
+    })
+
+    DATABASE.query_DB(
         data.email,
         data.pass
     )
