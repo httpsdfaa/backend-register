@@ -1,9 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const db = require('./db');
 
 const { PORT } = require('./config');
-const db = require('./db')
+
 
 const App = express();
 
@@ -24,8 +25,18 @@ App.post('/api/register', (req, res) => {
         pass: req.body.pass
     }
 
-    res.status(200).send("Success");
-    res.status(404).send("Not Found");
+    res.status(200).json({
+        status_code: 1,
+        data: req.body
+    })
+
+    // ADICIONANDO DADOS NO BANCO DE DADOS
+    db(
+        data.firstName,
+        data.surname,
+        data.email,
+        data.pass
+    )
 })
 
 
