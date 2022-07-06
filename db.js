@@ -1,6 +1,5 @@
 require('dotenv').config();
 const mysql = require('mysql2');
-
 module.exports = {
 
     DATABASE: {
@@ -26,7 +25,7 @@ module.exports = {
             connection.end();
         },
 
-        query_DB: function (emailPARAM, passPARAM) {
+        query_DB: function (emailPARAM, passPARAM, userExistPARAM, userNotFoundPARAM) {
             const connection = mysql.createConnection({
                 host: process.env.devHOST,
                 user: process.env.devUSER,
@@ -40,11 +39,18 @@ module.exports = {
                 querySELECT,
                 VALUES,
                 function (err, results, fields) {
-                    if(results){
+                    if (results[0]) {
+                        console.log(results[0])
+                        return userExistPARAM
+                    }
+                    else if (!results[0]) {
                         console.log(results)
+                        return userNotFoundPARAM
                     }
                 }
             )
+
+            connection.end()
         }
     }
 }

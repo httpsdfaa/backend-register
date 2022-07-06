@@ -45,17 +45,30 @@ App.post('/api/login', (req, res) => {
         pass: req.body.pass
     }
 
-    res.status(200).json({
-        status_code: 1,
-        data: req.body
-    })
+    function success() {
+        if (req.body) {
+            return res.sendStatus(200)
+        }
+    }
+
+    function unauthorized() {
+        if (req.body) {
+            return res.sendStatus(401)
+        }
+    }
 
     DATABASE.query_DB(
         data.email,
-        data.pass
+        data.pass,
+        success(),
+        unauthorized()
     )
-})
 
+    // res.status(200).json({
+    //     status: 'email ou senha errado',
+    //     data: req.body
+    // })
+})
 
 App.listen(PORT.dev, () => {
     console.log(`Servidor sendo executado na porta: ${PORT.dev}`)
