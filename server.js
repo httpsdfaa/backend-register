@@ -16,7 +16,7 @@ App.get('/', (req, res) => {
 
 App.post('/api/register', async(req, res) => {
 
-    const { firstName, surname, email, pass } = req.body
+    const { firstName, surname, email, pass } = req.body.data
 
     const string_DB = {
         insert: {
@@ -57,7 +57,7 @@ App.post('/api/register', async(req, res) => {
 })
 
 App.post('/api/login', (req, res) => {
-    const { email, pass } = req.body
+    const { email, pass } = req.body.data
 
     const querySELECT = 'SELECT email, password FROM db_user WHERE email=? AND password=?'
     const VALUES = [email, pass]
