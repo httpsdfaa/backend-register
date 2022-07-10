@@ -14,5 +14,11 @@ Controle de acesso usando NodeJS. O projeto está sendo desenvolvido com foco na
 - Dotenv
 - MySQL2
 
+## Características
+
+- Adicione um novo usuário
+- Faça login
+- Troca de senha
+
 ## Link site
 Em breve uma prévia do projeto
